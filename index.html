@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Energia Social</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Barra Lateral de Apresentação (Controle de Cenários e Fluxo) -->
+    <aside class="demo-controls">
+        <div class="demo-header">
+            <span class="demo-badge">FLUXO INTERATIVO COMPLETO</span>
+            <h2>Simulação Real do Cidadão</h2>
+            <p>Navegue pelas telas do celular ao lado como um beneficiário real ou salte diretamente para qualquer etapa:</p>
+        </div>
+
+        <div class="flow-steps">
+            <button class="step-nav-btn active" data-target="screen-login">
+                <span class="step-num">1</span>
+                <div>
+                    <strong>Tela de Login (ba.gov.br / Gov.br)</strong>
+                    <small>Acesso rápido com CPF e vínculo CadÚnico</small>
+                </div>
+            </button>
+            <button class="step-nav-btn" data-target="screen-home">
+                <span class="step-num">2</span>
+                <div>
+                    <strong>Tela Inicial do App (ba.gov.br)</strong>
+                    <small>Menu de serviços com o novo botão "Tarifa Limpa"</small>
+                </div>
+            </button>
+            <button class="step-nav-btn" data-target="screen-energy">
+                <span class="step-num">3</span>
+                <div>
+                    <strong>Módulo "Minha Energia Social"</strong>
+                    <small>Painel semáforo, autoleitura e isenção de impostos</small>
+                </div>
+            </button>
+        </div>
+
+        <hr class="divider">
+
+        <div class="demo-header">
+            <h3 style="font-size: 14px; margin-bottom: 6px;">Simulador de Consumo (Na Tela 3)</h3>
+        </div>
+        <div class="scenario-buttons">
+            <button class="scenario-btn active" data-kwh="48">
+                <span class="dot green"></span>
+                <div>
+                    <strong>48 kWh — Dentro da Cota Gratuita</strong>
+                    <small>Fatura R$ 0,00 • Isenção de COSIP</small>
+                </div>
+            </button>
+            <button class="scenario-btn" data-kwh="72">
+                <span class="dot yellow"></span>
+                <div>
+                    <strong>72 kWh — Alerta Preventivo (90%)</strong>
+                    <small>Faltam 8 kWh para atingir o limite</small>
+                </div>
+            </button>
+            <button class="scenario-btn" data-kwh="105">
+                <span class="dot red"></span>
+                <div>
+                    <strong>105 kWh — Excedente Protegido (+25 kWh)</strong>
+                    <small>Paga só a diferença pura (R$ 16,25 sem impostos)</small>
+                </div>
+            </button>
+            <button class="scenario-btn" data-kwh="165">
+                <span class="dot gray"></span>
+                <div>
+                    <strong>165 kWh — Acima da Trava (150 kWh)</strong>
+                    <small>Tributação normal apenas acima de 150 kWh</small>
+                </div>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Moldura do Smartphone -->
+    <main class="phone-stage">
+        <div class="phone-frame">
+            <!-- Status Bar -->
+            <div class="status-bar" id="statusBar">
+                <span>15:48</span>
+                <div class="notch"></div>
+                <div class="status-icons">
+                    <span>5G</span>
+                    <span>100%</span>
+                </div>
+            </div>
+
+            <!-- ==========================================
+                 TELA 1: LOGIN NO APLICATIVO ba.gov.br
+            =========================================== -->
+            <div class="app-screen active" id="screen-login">
+                <div class="login-hero">
+                    <div class="brand-ba-lg">
+                        <span class="ba-flag-lg"></span>
+                        <span>ba<strong>.gov.br</strong></span>
+                    </div>
+                    <p class="login-subtitle">Plataforma Digital de Serviços do Governo da Bahia</p>
+                </div>
+
+                <div class="login-card">
+                    <h2>Acesse sua conta</h2>
+                    <p class="login-desc">Use seu CPF cadastrado no <strong>Gov.br</strong> para acessar seus serviços e benefícios sociais.</p>
+
+                    <div class="input-group">
+                        <label for="loginCpf">CPF do Titular</label>
+                        <input type="text" id="loginCpf" value="048.729.115-80" maxlength="14">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="loginPass">Senha Gov.br</label>
+                        <input type="password" id="loginPass" value="••••••••••">
+                    </div>
+
+                    <div class="cadunico-check-box">
+                        <span class="check-badge">✓</span>
+                        <small>Integração automática com <strong>CadÚnico / Bolsa Família</strong> e <strong>Neoenergia Coelba</strong></small>
+                    </div>
+
+                    <button class="btn-ba-solid" id="btnDoLogin">
+                        Entrar com Gov.br
+                    </button>
+
+                    <button class="btn-ba-outline" id="btnBiometria">
+                        Entrar com Biometria Digital
+                    </button>
+                </div>
+
+                <div class="login-footer">
+                    <span>Governo do Estado da Bahia • PRODEB</span>
+                </div>
+            </div>
+
+            <!-- ==========================================
+                 TELA 2: HOME DO APP ba.gov.br (MENU DE SERVIÇOS)
+            =========================================== -->
+            <div class="app-screen" id="screen-home">
+                <header class="app-header home-header">
+                    <div class="header-top">
+                        <div class="brand-ba">
+                            <span class="ba-flag"></span>
+                            <span class="ba-text">ba<strong>.gov.br</strong></span>
+                        </div>
+                        <button class="user-avatar" id="btnLogout" title="Sair da conta">MA</button>
+                    </div>
+                    <div class="welcome-area">
+                        <p>Olá, <strong>Sucelso</strong></p>
+                        <span class="beneficio-pill">● Bolsa Família / CadÚnico Ativo</span>
+                    </div>
+                    <div class="search-mock">
+                        <span>🔍</span>
+                        <input type="text" placeholder="Buscar serviço (ex: Tarifa Limpa, SAC, RG...)" readonly>
+                    </div>
+                </header>
+
+                <div class="app-body">
+                    <!-- Destaque Novo Programa (Banner Clicável) -->
+                    <div class="featured-program-card" id="cardOpenTarifaLimpa">
+                        <div class="featured-badge">NOVO • ODS 7</div>
+                        <div class="featured-content">
+                            <div class="featured-icon">⚡</div>
+                            <div>
+                                <h3>Minha Energia Social</h3>
+                                <p>Acompanhe seus <strong>80 kWh gratuitos</strong> e pague só o excedente sem impostos.</p>
+                            </div>
+                        </div>
+                        <div class="featured-footer">
+                            <span>Consumo atual: <strong id="homePreviewKwh">48 kWh</strong> (Fatura zerada)</span>
+                            <span class="arrow-go">Acessar →</span>
+                        </div>
+                    </div>
+
+                    <div class="section-label-home">SERVIÇOS MAIS ACESSADOS</div>
+
+                    <div class="services-grid">
+                        <button class="service-tile highlight-tile" id="tileOpenTarifaLimpa">
+                            <div class="tile-icon teal-bg">⚡</div>
+                            <strong>Tarifa Limpa</strong>
+                            <small>Energia Social</small>
+                        </button>
+                        <div class="service-tile">
+                            <div class="tile-icon blue-bg">🪪</div>
+                            <strong>Documentos</strong>
+                            <small>RG e CNH Digital</small>
+                        </div>
+                        <div class="service-tile">
+                            <div class="tile-icon blue-bg">📅</div>
+                            <strong>Rede SAC</strong>
+                            <small>Agendamento</small>
+                        </div>
+                        <div class="service-tile">
+                            <div class="tile-icon blue-bg">🏥</div>
+                            <strong>Saúde Bahia</strong>
+                            <small>Consultas e Exames</small>
+                        </div>
+                        <div class="service-tile">
+                            <div class="tile-icon blue-bg">💧</div>
+                            <strong>Embasa</strong>
+                            <small>Tarifa Social Água</small>
+                        </div>
+                        <div class="service-tile">
+                            <div class="tile-icon blue-bg">🎓</div>
+                            <strong>Educação</strong>
+                            <small>Boletim e Matrícula</small>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="bottom-nav">
+                    <a href="#" class="nav-item active" data-screen="screen-home">
+                        <span class="nav-icon">⌂</span>
+                        <span>Início</span>
+                    </a>
+                    <a href="#" class="nav-item" data-screen="screen-energy">
+                        <span class="nav-icon">⚡</span>
+                        <span>Energia</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <span class="nav-icon">📄</span>
+                        <span>Documentos</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <span class="nav-icon">☰</span>
+                        <span>Serviços</span>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- ==========================================
+                 TELA 3: ABA DO PROJETO (MINHA ENERGIA SOCIAL)
+            =========================================== -->
+            <div class="app-screen" id="screen-energy">
+                <header class="app-header">
+                    <div class="header-top">
+                        <button class="icon-btn" id="btnBackToHome" title="Voltar para Início">←</button>
+                        <div class="brand-ba">
+                            <span class="ba-flag"></span>
+                            <span class="ba-text">ba<strong>.gov.br</strong></span>
+                        </div>
+                        <div class="user-avatar" title="Perfil Verificado">MA</div>
+                    </div>
+                    <div class="page-title-area">
+                        <span class="service-tag">ODS 7 • PROGRAMA TARIFA LIMPA</span>
+                        <h1>Minha Energia Social</h1>
+                        <p class="uc-info">UC: 70482910-4 • Titular: Sucelso (CadÚnico Ativo)</p>
+                    </div>
+                </header>
+
+                <div class="app-body">
+                    <!-- Banner de Alerta Semáforo -->
+                    <div class="alert-banner status-green" id="alertBanner">
+                        <div class="alert-icon" id="alertIcon">✓</div>
+                        <div class="alert-content">
+                            <strong id="alertTitle">Consumo dentro da faixa gratuita!</strong>
+                            <p id="alertDesc">Você ainda tem 32 kWh gratuitos disponíveis neste ciclo. Sua fatura está zerada.</p>
+                        </div>
+                    </div>
+
+                    <!-- Card Principal: Medidor -->
+                    <section class="card meter-card">
+                        <div class="card-header-row">
+                            <span class="card-label">CONSUMO DO CICLO ATUAL</span>
+                            <span class="cycle-badge">Dia 18 de 30</span>
+                        </div>
+
+                        <div class="kwh-display">
+                            <span class="kwh-number" id="kwhValue">48</span>
+                            <span class="kwh-unit">kWh</span>
+                            <span class="kwh-limit">/ 80 kWh gratuitos</span>
+                        </div>
+
+                        <div class="traffic-bar-wrapper">
+                            <div class="traffic-bar-bg">
+                                <div class="traffic-bar-fill status-green" id="progressBar" style="width: 32%;"></div>
+                                <div class="limit-marker" style="left: 53.3%;" title="Limite Gratuito: 80 kWh"></div>
+                            </div>
+                            <div class="bar-labels">
+                                <span>0 kWh</span>
+                                <span class="marker-label">80 kWh (Grátis)</span>
+                                <span>150 kWh (Teto)</span>
+                            </div>
+                        </div>
+
+                        <div class="meter-meta-grid">
+                            <div class="meta-item">
+                                <small>Leitura Inicial</small>
+                                <strong>14.520</strong>
+                            </div>
+                            <div class="meta-item">
+                                <small>Leitura Atual</small>
+                                <strong id="currentReading">14.568</strong>
+                            </div>
+                            <div class="meta-item">
+                                <small>Número-Meta Grátis</small>
+                                <strong class="highlight-teal">14.600</strong>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Card de Autoleitura -->
+                    <section class="card autoleitura-card">
+                        <div class="autoleitura-header">
+                            <h3>Atualizar Relógio (Autoleitura)</h3>
+                            <p>Olhe o visor do medidor na parede e digite os 5 números:</p>
+                        </div>
+                        <div class="autoleitura-form">
+                            <input type="number" id="inputReading" placeholder="Ex: 14585" min="14520" max="14800">
+                            <button id="btnUpdateReading" class="btn-primary">Calcular</button>
+                        </div>
+                        <span class="helper-text" id="readingFeedback">Última atualização: hoje às 14:10 (Estimativa + Autoleitura)</span>
+                    </section>
+
+                    <!-- Card de Transparência da Fatura -->
+                    <section class="card billing-card">
+                        <div class="card-header-row">
+                            <span class="card-label">PREVISÃO DA FATURA (TARIFA LIMPA)</span>
+                            <span class="tax-free-pill" id="regimeBadge">GRATUIDADE TOTAL (0–80 kWh)</span>
+                        </div>
+
+                        <div class="bill-total-row">
+                            <div>
+                                <small>Valor Estimado a Pagar</small>
+                                <div class="bill-price" id="billTotal">R$ 0,00</div>
+                            </div>
+                            <div class="savings-box">
+                                <small>Economia em Impostos/Taxas</small>
+                                <strong id="taxSaved">R$ 22,50</strong>
+                            </div>
+                        </div>
+
+                        <div class="bill-breakdown">
+                            <div class="breakdown-row">
+                                <span>Cota Básica Gratuita (até 80 kWh)</span>
+                                <span class="val-free">R$ 0,00</span>
+                            </div>
+                            <div class="breakdown-row">
+                                <span>Energia Excedente Pura (<span id="extraKwhLabel">0</span> kWh)</span>
+                                <span id="rowExtraEnergy">R$ 0,00</span>
+                            </div>
+                            <div class="breakdown-row">
+                                <span>ICMS + PIS/COFINS + Encargos</span>
+                                <span class="val-exempt" id="rowTaxes">ISENTO (R$ 0,00)</span>
+                            </div>
+                            <div class="breakdown-row">
+                                <span>Taxa de Iluminação Pública (COSIP)</span>
+                                <span class="val-exempt" id="rowCosip">ISENTO (R$ 0,00)</span>
+                            </div>
+                        </div>
+
+                        <button class="btn-pix" id="btnPix" disabled>
+                            Fatura Zerada — Nada a Pagar
+                        </button>
+                    </section>
+                </div>
+
+                <nav class="bottom-nav">
+                    <a href="#" class="nav-item" data-screen="screen-home">
+                        <span class="nav-icon">⌂</span>
+                        <span>Início</span>
+                    </a>
+                    <a href="#" class="nav-item active" data-screen="screen-energy">
+                        <span class="nav-icon">⚡</span>
+                        <span>Energia</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <span class="nav-icon">📄</span>
+                        <span>Documentos</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <span class="nav-icon">☰</span>
+                        <span>Serviços</span>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Modal de Pagamento Pix -->
+            <div class="modal-overlay" id="pixModal">
+                <div class="modal-card">
+                    <h3>Pagamento via Pix — Tarifa Limpa</h3>
+                    <p>Você está pagando <strong>apenas pelo consumo excedente</strong>, livre de impostos estaduais, encargos e COSIP.</p>
+                    <div class="pix-box">
+                        <span class="pix-amount" id="modalPixAmount">R$ 16,25</span>
+                        <code>00020126580014br.gov.bcb.pix0136tarifalimpa-ba-gov-br5204000053039865802BR</code>
+                    </div>
+                    <button class="btn-primary full-width" id="btnCloseModal">Copiar Código e Fechar</button>
+                </div>
+            </div>
+
+            <!-- Overlay de Carregamento (Autenticação Gov.br) -->
+            <div class="loading-overlay" id="loadingOverlay">
+                <div class="spinner"></div>
+                <p id="loadingText">Validando CPF no Gov.br e CadÚnico...</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
